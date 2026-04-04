@@ -4,19 +4,20 @@ channels:
   - nvidia
   - conda-forge
 dependencies:
-  - python=3.10
-  - pytorch
-  - torchvision
-  - pytorch-cuda=12.1
-  - numpy
+  - python=3.11
+  - pytorch=2.5.1
+  - torchvision=0.20.1
+  - numpy=2.4.4
   - scipy
-  - pandas
-  - matplotlib
-  - gymnasium
+  - pandas=2.3.2
+  - matplotlib=3.10.1
   - mujoco
   - pip
   - pip:
-      - stable-baselines3
+      - gymnasium==0.29.1
+      - stable-baselines3==2.2.1
+      - imitation==1.0.1
+      - gym-xarm==0.1.1
       - tensorboard
       - tqdm
       - imageio

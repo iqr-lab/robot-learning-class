@@ -148,9 +148,14 @@ def main():
     # Optional rendered eval
     # -------------------------
     print("\nRunning rendered evaluation...")
-    render_env = gym.make(ENV_NAME, render_mode="human")
+    try:
+        render_env = gym.make(ENV_NAME, render_mode="human")
+    except Exception:
+        render_env = gym.make(ENV_NAME)
 
-    for ep in range(5):
+    success = 0
+
+    for ep in range(100):
         obs, _ = render_env.reset(seed=SEED + ep)
         done = False
         total_reward = 0.0
@@ -162,8 +167,12 @@ def main():
             done = terminated or truncated
             render_env.render()
 
-        print(f"[Rendered Eval] Episode {ep}: reward={total_reward:.2f}")
+        if info["is_success"]:
+            success += 1
 
+        print(f"[Rendered Eval] Episode {ep}: reward={total_reward:.2f}, success={info['is_success']}")
+
+    print(f"\nSuccess rate: {success}/10 ({success * 10:.0f}%)")
     render_env.close()
     env.close()
 

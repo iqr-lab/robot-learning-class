@@ -25,7 +25,7 @@ Install the xArm gym environment:
 
 ```bash
 git clone git@github.com:iqr-lab/gym-xarm.git
-cd gym_xarm
+cd gym-xarm
 pip install -e .
 ```
 
