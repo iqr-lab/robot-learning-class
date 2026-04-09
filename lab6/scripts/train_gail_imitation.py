@@ -25,8 +25,13 @@ SEED = 42
 # =========================
 # Config
 # =========================
-ENV_NAME = "gym_xarm/XarmReach-v0"
-SAC_MODEL_PATH = "experts/sac_reach"
+# ENV_NAME = "gym_xarm/XarmReach-v0"
+# SAC_MODEL_PATH = "experts/sac_reach"
+
+ENV_NAME = "gym_xarm/XarmPickPlaceDense-v0"
+SAC_MODEL_PATH = "experts/sac_pickplace"
+
+SAVE_PATH = "policies/gail_ppo_pickplace"
 
 N_ENVS = 8
 N_EXPERT_EPISODES = 60
@@ -130,6 +135,13 @@ def main():
     # -------------------------
     print("\nStarting GAIL training...")
     gail_trainer.train(TOTAL_GAIL_TIMESTEPS)
+
+    # -------------------------
+    # Save trained policy
+    # -------------------------
+    print("\nSaving trained policy...")
+    learner.save(SAVE_PATH)
+    print(f"Policy saved to {SAVE_PATH}")
 
     # -------------------------
     # Evaluate after training

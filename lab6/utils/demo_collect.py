@@ -76,8 +76,6 @@ def collect_sac_demos(
         # Filtering logic (KEY)
         # -------------------------
         keep = True
-        
-        print(info)
 
         if success_only:
             keep = info.get("is_success", False)

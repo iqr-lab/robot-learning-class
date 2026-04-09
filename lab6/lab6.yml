@@ -1,23 +1,24 @@
 name: lab6
 channels:
+  - conda-forge
   - pytorch
   - nvidia
-  - conda-forge
 dependencies:
-  - python=3.11
-  - pytorch=2.5.1
-  - torchvision=0.20.1
-  - numpy=2.4.4
+  - python=3.10
+  - libstdcxx-ng
+  - pytorch
+  - torchvision
+  - pytorch-cuda=12.1
+  - numpy
   - scipy
-  - pandas=2.3.2
-  - matplotlib=3.10.1
+  - pandas
+  - matplotlib
+  - gymnasium
   - mujoco
   - pip
   - pip:
-      - gymnasium==0.29.1
-      - stable-baselines3==2.2.1
-      - imitation==1.0.1
-      - gym-xarm==0.1.1
+      - stable-baselines3
       - tensorboard
       - tqdm
       - imageio
+      - xarm-python-sdk

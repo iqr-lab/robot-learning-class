@@ -1,38 +1,82 @@
+import re
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 import argparse
 
+COLUMNS = [
+    "iter", "train_reward", "imitation_loss", "disc_loss",
+    "disc_loss_expert", "disc_loss_generated", "test_gen_reward",
+]
 
-def plot_metrics(csv_path, output_path=None):
-    df = pd.read_csv(csv_path)
+PANELS = [
+    {
+        "title": "Episode Reward",
+        "keys": ["train_reward", "test_gen_reward"],
+        "colors": ["#3b82f6", "#f97316"],
+        "ylabel": "Reward",
+    },
+    {
+        "title": "Imitation Loss (generator NLL on expert actions)",
+        "keys": ["imitation_loss"],
+        "colors": ["#8b5cf6"],
+        "ylabel": "NLL",
+    },
+    {
+        "title": "Discriminator Loss (total)",
+        "keys": ["disc_loss"],
+        "colors": ["#ef4444"],
+        "ylabel": "BCE",
+        "hlines": [("2·ln(2)", 2 * np.log(2))],
+    },
+    {
+        "title": "Discriminator Loss (expert vs generated)",
+        "keys": ["disc_loss_expert", "disc_loss_generated"],
+        "colors": ["#06b6d4", "#f43f5e"],
+        "ylabel": "BCE",
+        "hlines": [("ln(2)", np.log(2))],
+    },
+]
 
-    # Use GAIL round as x-axis
-    x = df["mean/disc/global_step"]
 
-    fig, axes = plt.subplots(2, 1, figsize=(10, 7), sharex=True)
+def parse_log(path):
+    data = {c: [] for c in COLUMNS}
+    with open(path) as f:
+        for line in f:
+            parts = line.split("|")
+            if len(parts) < len(COLUMNS) + 1:
+                continue
+            vals = [p.strip() for p in parts[1:]]  # skip timestamp
+            try:
+                int(vals[0])
+            except ValueError:
+                continue
+            for col, val in zip(COLUMNS, vals):
+                data[col].append(int(val) if col == "iter" else float(val))
+    return {k: np.array(v) for k, v in data.items()}
 
-    # --- Panel 1: Generator imitation loss (PPO policy gradient loss) ---
-    ax = axes[0]
-    col = "mean/gen/train/policy_gradient_loss"
-    ax.plot(x, df[col], color="#8b5cf6", lw=1.5, label="policy gradient loss")
-    ax.set_ylabel("Loss")
-    ax.set_title("Generator Imitation Loss")
-    ax.legend()
-    ax.grid(True, alpha=0.3)
 
-    # --- Panel 2: Discriminator accuracy on expert vs generated ---
-    # Per-source loss is not logged; accuracy is the closest available split.
-    ax = axes[1]
-    ax.plot(x, df["mean/disc/disc_acc_expert"], color="#06b6d4", lw=1.5, label="acc on demonstrations")
-    ax.plot(x, df["mean/disc/disc_acc_gen"],    color="#f43f5e", lw=1.5, label="acc on generated")
-    ax.axhline(0.5, ls="--", color="gray", lw=0.8, label="random chance (0.5)")
-    ax.set_ylabel("Accuracy")
-    ax.set_title("Discriminator Accuracy: Demonstrations vs Generated")
-    ax.set_xlabel("GAIL Round")
-    ax.legend()
-    ax.grid(True, alpha=0.3)
+def plot_metrics(data, output_path=None):
+    fig, axes = plt.subplots(len(PANELS), 1, figsize=(12, 3.5 * len(PANELS)),
+                             sharex=True)
+    iters = data["iter"]
 
+    for ax, panel in zip(axes, PANELS):
+        for key, color in zip(panel["keys"], panel["colors"]):
+            vals = data[key]
+            mask = ~np.isnan(vals)
+            style = "o-" if mask.sum() < len(vals) else "-"
+            ax.plot(iters[mask], vals[mask], style, ms=2, lw=1,
+                    label=key, color=color)
+
+        for label, y in panel.get("hlines", []):
+            ax.axhline(y, ls="--", color="gray", lw=0.8, label=label)
+
+        ax.set_ylabel(panel["ylabel"])
+        ax.set_title(panel["title"])
+        ax.legend()
+        ax.grid(True, alpha=0.3)
+
+    axes[-1].set_xlabel("Iteration")
     plt.tight_layout()
 
     if output_path:
@@ -44,8 +88,10 @@ def plot_metrics(csv_path, output_path=None):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-l", "--log_file", required=True, help="path to progress.csv")
-    parser.add_argument("-o", "--output", default=None, help="optional output image path")
+    parser.add_argument("-l", "--log_file")
+    parser.add_argument("-o", "--output", default=None)
     args = parser.parse_args()
 
-    plot_metrics(args.log_file, args.output)
+    data = parse_log(args.log_file)
+    print(f"Parsed {len(data['iter'])} iterations")
+    plot_metrics(data, args.output)
