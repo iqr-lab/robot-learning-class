@@ -74,7 +74,7 @@ class XArmRealEnvConfig:
     default_acc_mm_s2: float = 800.0
 
     # Workspace limits in WORLD coordinates (meters)
-    workspace_low: tuple = (0.1, -0.05, 0.10)
+    workspace_low: tuple = (0.1, -0.05, 0.20)
     workspace_high: tuple = (0.65, 0.35, 0.5)
 
     # Proximity grasp: close gripper when EEF is within this distance of the object.

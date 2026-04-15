@@ -41,17 +41,6 @@ def main():
         step = 0
         while not done:
             action, _ = model.predict(obs, deterministic=True)
-            print(f"\n--- step {step} ---")
-            print(f"  obs[0:3]   eef        = {obs[0:3].round(4)}")
-            print(f"  obs[3:6]   eef_velp   = {obs[3:6].round(4)}")
-            print(f"  obs[6:9]   obj        = {obs[6:9].round(4)}")
-            print(f"  obs[9:13]  obj_rot    = {obs[9:13].round(4)}")
-            print(f"  obs[19:22] goal       = {obs[19:22].round(4)}")
-            print(f"  obs[22:25] eef_to_obj = {obs[22:25].round(4)}")
-            print(f"  obs[25:28] obj_to_goal= {obs[25:28].round(4)}")
-            print(f"  obs[28:34] scalars    = {obs[28:34].round(4)}")
-            print(f"  obs[34]    gripper    = {obs[34]:.4f}")
-            print(f"  action                = {action.round(4)}")
             obs, reward, terminated, truncated, info = env.step(action)
             step += 1
             ep_reward += reward
