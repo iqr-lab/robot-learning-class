@@ -50,7 +50,7 @@ lab7/
 | T2      | Knock object | "knock the tomato sauce can" | High (3 knock variants) |
 | T3      | Wipe surface | "wipe the stove top" | Low (1 instance)          |
 
-Some other task incldues
+Some other tasks include:
 
 ```
 {"task_index": 0, "task": "put the pot in the sink"}
