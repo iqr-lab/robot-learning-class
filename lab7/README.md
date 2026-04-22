@@ -50,14 +50,6 @@ lab7/
 | T2      | Knock object | "knock the white condiment bottle" | Medium |
 | T3      | Wipe surface | "wipe the stove top" | Low |
 
-Baseline success rate for PI_0.5:
-
-lift the eggplant: 5/5, put the eggplant in the pot: 4/5
-
-knock the white condiment bottle: 3/5
-
-wipe the stove top: 3/5
-
 Some other tasks include:
 
 ```
