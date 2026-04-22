@@ -44,11 +44,17 @@ lab7/
 
 ## Tasks
 
-| Task ID | Description | Language Instruction | Fine-tuning Representation |
+| Task ID | Description | Language Instruction | Datasize |
 |---------|-------------|----------------------|---------------------------|
-| T1      | Lift object | "lift the eggplant"  | High (7 lift variants)    |
-| T2      | Knock object | "knock the tomato sauce can" | High (3 knock variants) |
-| T3      | Wipe surface | "wipe the stove top" | Low (1 instance)          |
+| T1      | Lift object | "lift the eggplant, put the eggplant in the pot"  | High  |
+| T2      | Knock object | "knock the white condiment bottle" | Medium |
+| T3      | Wipe surface | "wipe the stove top" | Low |
+
+Baseline success rate:
+
+lift the eggplant: 5/5, put the eggplant in the pot: 4/5
+knock the white condiment bottle: 3/5
+wipe the stove top: 3/5
 
 Some other tasks include:
 
