@@ -229,7 +229,7 @@ videos/part2b/
 
 ## Part 2C — Out-of-Distribution Generalization
 
-Pick a **new task** not included in the fine-tuning data that you believe is still plausibly within the model's capabilities. This should be a mixture between two known tasks. E.g. "put the bowl in the sink" and "put the carrot in the pot" -> "put the pot in the sink". Run 3 trials per model.
+Pick a **new task** not included in the fine-tuning data that you believe is still plausibly within the model's capabilities. This should be a mixture between two known tasks. E.g. "put the bowl in the sink" and "put the carrot in the pot" -> "put the pot in the sink". "Put the rubber duck into the sink". Run 3 trials per model.
 
 ### Reflection
 
