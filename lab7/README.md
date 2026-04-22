@@ -26,7 +26,7 @@ Make sure you have the correct version of the OpenPi repos before starting.
 ---
 
 ## Code Structure
-
+```
 lab7/
 ├── policies/
 │   ├── pi0_fast/        # Pi0-FAST checkpoints
@@ -38,7 +38,7 @@ lab7/
 │   └── task_list.md     # Task definitions and language instructions
 ├── videos/              # Recorded rollout videos
 └── logs/                # Success rate logs
-
+```
 
 ---
 
@@ -111,7 +111,7 @@ python scripts/run_pi0_5.py --task T1
 ### Deliverables
 
 **Deliverable 1 — Videos:** Record one video per model per task (6 videos total).
-
+```
 videos/part1/
 ├── pi0_fast_T1.mp4
 ├── pi0_fast_T2.mp4
@@ -119,7 +119,7 @@ videos/part1/
 ├── pi0_5_T1.mp4
 ├── pi0_5_T2.mp4
 └── pi0_5_T3.mp4
-
+```
 **Deliverable 2 — Success Rate Table:** Report success rates (successes / 3 trials) for each model and task.
 
 |           | Task 1 | Task 2 | Task 3 |
@@ -169,11 +169,11 @@ python scripts/run_pi0_5.py --task T1 --checkpoint finetuned
 ### Deliverables
 
 **Deliverable — Videos:** Record one video per model per task (6 videos total).
-
+```
 videos/part2a/
 ├── pi0_fast_T1.mp4
 ...
-
+```
 
 **Deliverable — Success Rate Table:**
 
@@ -230,11 +230,11 @@ Pick a **new task** not included in the fine-tuning data that you believe is sti
 ### Deliverables
 
 **Deliverable — Videos:** 2 videos (one per model).
-
+```
 videos/part2c/
 ├── pi0_fast_OOD.mp4
 └── pi0_5_OOD.mp4
-
+```
 **Deliverable — Success Rate Table:**
 
 |           | OOD Task |
